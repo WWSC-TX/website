@@ -4,7 +4,7 @@
 	<div class="colleft">
 		<div class="col1">	<!-- Right column start -->
 		<p>{$introduction}</p>
-		<ul style="list-style-type: circle">
+		<ul style="list-style-type:circle;padding-left:5px">
 			{foreach $links as $text=>$url}
 			<li><a href="{$url}" rel="external">{$text}</a></li>
 			{/foreach}
