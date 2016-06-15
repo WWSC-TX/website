@@ -11,6 +11,9 @@ function externalLinks()
 		var anchor = anchors[i];
 		if (anchor.getAttribute("rel") == "external")
 			anchor.target = "_blank";
+		var href = anchor.getAttribute("href");
+		if (href.lastIndexOf(".pdf") == href.length - 4)
+			anchor.target = "_blank";
 	}
 }
 window.onload = function() { externalLinks(); }
