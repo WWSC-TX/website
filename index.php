@@ -8,18 +8,18 @@ $smarty->assign('page_name_alt', 'Weston Water');
 // Right Column text
 $meeting_dates_year = 2016;
 $meeting_dates = array(
-	'Jan 25' => '',
-	'Feb 29' => '',
-	'Mar 28' => '',
-	'Apr 25' => '',
-	'May 30' => '',
-	'Jun 27' => '',
-	'Jul 25' => '',
-	'Aug 29' => '',
-	'Sep 26' => '',
-	'Oct 24' => '',
-	'Nov 28' => '',
-	'Dec 19' => ''
+	'Jan 25' => array(),
+	'Feb 29' => array(),
+	'Mar 28' => array(),
+	'Apr 25' => array(),
+	'May 30' => array(),
+	'Jun 27' => array(),
+	'Jul 25' => array(),
+	'Aug 29' => array(),
+	'Sep 26' => array(),
+	'Oct 24' => array(),
+	'Nov 28' => array(),
+	'Dec 19' => array()
 );
 $smarty->assign('meeting_dates_heading', $meeting_dates_year.' Meeting Dates');
 $smarty->assign('meeting_time', 'Meetings held at 7:00pm.');
@@ -47,7 +47,7 @@ foreach($agendas as $date)
 		// We can set the link to an agenda
 		if(strtotime($meet_day.', '.$meeting_dates_year) == strtotime($year.'/'.$month.'/'.$day))
 		{
-			$meeting_dates[$meet_day] = array('agendas', $year.'-'.$month.'-'.$day.'.pdf');
+			$meeting_dates[$meet_day]['agenda'] = $year.'-'.$month.'-'.$day.'.pdf';
 			break;
 		}
 	}
@@ -73,7 +73,7 @@ foreach($minutes as $date)
 		// We can set the link to an agenda
 		if(strtotime($meet_day.', '.$meeting_dates_year) == strtotime($year.'/'.$month.'/'.$day))
 		{
-			$meeting_dates[$meet_day] = array('minutes_archive', $year.'-'.$month.'-'.$day.'.pdf');
+			$meeting_dates[$meet_day]['minutes'] = $date;//$year.'-'.$month.'-'.$day.'.pdf';
 			break;
 		}
 	}
