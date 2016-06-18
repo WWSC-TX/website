@@ -12,9 +12,9 @@
 <div id="body">
 <div id="header">
 	<div style="display:inline-block">
-	<div style="float:left"><img src="/images/photo.png" alt="SLOGAN!" /></div>
+	<div style="float:left"><img src="images/photo.png" alt="SLOGAN!" /></div>
 	<div style="float:left">
-		<div><img src="/images/logo.png" alt="Weston Water Supply Corporation" /></div>
+		<div><img src="images/logo.png" alt="Weston Water Supply Corporation" /></div>
 		<div id="welcome"><h3>{$welcome}</h3>
 		<p>{$welcome_text}</p><br /></div>
 	</div>
