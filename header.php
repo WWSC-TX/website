@@ -3,7 +3,7 @@ if(!defined('COMMON_INCLUDED'))
 	exit(1);
 
 $smarty->assign('menu', array(
-		'Home'					=> '',
+		'Home'					=> './',
 		'Archives'			=> 'archives.php',
 		'Forms'					=> 'forms.php',
 		'Policies'			=> 'policy.php',

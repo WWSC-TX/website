@@ -3,7 +3,7 @@
 <head>
 <title>{$title|default:"Weston Water Supply Corporation"}</title>
 <link rel="stylesheet" type="text/css" href="style.css" type="image/x-icon" />
-<link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon" />
+<link rel="shortcut icon" href="favicon.ico?" type="image/x-icon" />
 <script type="text/javascript" src="util.js"></script>
 </head>
 <body>
