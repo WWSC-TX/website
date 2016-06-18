@@ -3,7 +3,7 @@ define('PUBLIC_PAGE', true);
 include('common.php');
 
 $smarty->assign('title', 'Weston Water :: Archives');
-$smarty->assign('page_name_location', '/images/titles/archives.png');
+$smarty->assign('page_name_location', 'images/titles/archives.png');
 $smarty->assign('page_name_alt', 'Archives');
 
 $smarty->assign('title', 'Archive of Meeting Minutes');

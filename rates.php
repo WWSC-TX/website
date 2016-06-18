@@ -3,7 +3,7 @@ define('PUBLIC_PAGE', true);
 include('common.php');
 
 $smarty->assign('title', 'Weston Water :: Rates & Fees');
-$smarty->assign('page_name_location', '/images/titles/rates.png');
+$smarty->assign('page_name_location', 'images/titles/rates.png');
 $smarty->assign('page_name_alt', 'Rates and Fees');
 
 // Rates

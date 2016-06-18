@@ -3,7 +3,7 @@ define('PUBLIC_PAGE', true);
 include('common.php');
 
 $smarty->assign('title', 'Weston Water :: Forms');
-$smarty->assign('page_name_location', '/images/titles/forms.png');
+$smarty->assign('page_name_location', 'images/titles/forms.png');
 $smarty->assign('page_name_alt', 'Forms');
 
 // Forms listing

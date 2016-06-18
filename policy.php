@@ -3,7 +3,7 @@ define('PUBLIC_PAGE', true);
 include('common.php');
 
 $smarty->assign('title', 'Weston Water :: Policy Information');
-$smarty->assign('page_name_location', '/images/titles/policy.png');
+$smarty->assign('page_name_location', 'images/titles/policy.png');
 $smarty->assign('page_name_alt', 'Policy Information');
 
 // Weston WSC Policy

@@ -2,7 +2,7 @@
 define('PUBLIC_PAGE', true);
 include('common.php');
 
-$smarty->assign('page_name_location', '/images/titles/home.png');
+$smarty->assign('page_name_location', 'images/titles/home.png');
 $smarty->assign('page_name_alt', 'Weston Water');
 
 // Right Column text

@@ -3,7 +3,7 @@ define('PUBLIC_PAGE', true);
 include('common.php');
 
 $smarty->assign('title', 'Weston Water :: About Us');
-$smarty->assign('page_name_location', '/images/titles/about.png');
+$smarty->assign('page_name_location', 'images/titles/about.png');
 $smarty->assign('page_name_alt', 'About Us');
 
 // Google Map; see http://code.google.com/apis/maps/documentation/staticmaps/ for more information

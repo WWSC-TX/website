@@ -3,7 +3,7 @@ define('PUBLIC_PAGE', true);
 include('common.php');
 
 $smarty->assign('title', 'Weston Water :: Links');
-$smarty->assign('page_name_location', '/images/titles/links.png');
+$smarty->assign('page_name_location', 'images/titles/links.png');
 $smarty->assign('page_name_alt', 'Links');
 
 $smarty->assign('introduction', 'The following links may be of interest to you, our member or prospective member.');
