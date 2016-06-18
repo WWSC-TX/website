@@ -12,8 +12,10 @@
 			<div class="col3">	<!-- Right Column start -->
 			<h4>{$meeting_dates_heading}</h4>
 			<ul>
-			{foreach $meeting_dates as $day=>$link}
-			<li>{if $link ne ''}<a href="{$link[0]}/{$link[1]}" class="{$link[0]}">{$day}</a>{else}{$day}{/if}</li>
+			{foreach $meeting_dates as $day=>$links}
+			<li>{$day}{if array_key_exists('agenda', $links)}
+			&ndash; <a href="agendas/{$links['agenda']}">agenda</a>{/if}{if array_key_exists('minutes', $links)}
+			&ndash; <a href="minutes_archive/{$links['minutes']}">minutes</a>{/if}</li>
 			{/foreach}
 			</ul>
 			<span class="comment">{$meeting_time}</span>
