@@ -6,7 +6,10 @@ $smarty->assign('page_name_location', 'images/titles/home.png');
 $smarty->assign('page_name_alt', 'Weston Water');
 
 // Right Column text
-$meeting_dates_year = 2016;
+$wc_meeting_dates = explode("\n", file_get_contents('website_config/meeting_dates'));
+$meeting_dates_year = intval(array_shift($wc_meeting_dates));
+$meeting_dates = array_fill_keys($wc_meeting_dates, array());
+/*$meeting_dates_year = 2016;
 $meeting_dates = array(
 	'Jan 18' => array(),
 	'Feb 29' => array(),
@@ -20,7 +23,7 @@ $meeting_dates = array(
 	'Oct 24' => array(),
 	'Nov 28' => array(),
 	'Dec 19' => array()
-);
+);*/
 $smarty->assign('meeting_dates_heading', $meeting_dates_year.' Meeting Dates');
 $smarty->assign('meeting_time', 'Meetings held at 7:00pm.');
 
