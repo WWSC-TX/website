@@ -8,7 +8,7 @@ $smarty->assign('page_name_alt', 'Weston Water');
 // Right Column text
 $meeting_dates_year = 2016;
 $meeting_dates = array(
-	'Jan 25' => array(),
+	'Jan 18' => array(),
 	'Feb 29' => array(),
 	'Mar 28' => array(),
 	'Apr 25' => array(),
@@ -47,7 +47,7 @@ foreach($agendas as $date)
 		// We can set the link to an agenda
 		if(strtotime($meet_day.', '.$meeting_dates_year) == strtotime($year.'/'.$month.'/'.$day))
 		{
-			$meeting_dates[$meet_day]['agenda'] = $year.'-'.$month.'-'.$day.'.pdf';
+			$meeting_dates[$meet_day]['agenda'] = $date;
 			break;
 		}
 	}
@@ -73,7 +73,7 @@ foreach($minutes as $date)
 		// We can set the link to an agenda
 		if(strtotime($meet_day.', '.$meeting_dates_year) == strtotime($year.'/'.$month.'/'.$day))
 		{
-			$meeting_dates[$meet_day]['minutes'] = $date;//$year.'-'.$month.'-'.$day.'.pdf';
+			$meeting_dates[$meet_day]['minutes'] = $date;
 			break;
 		}
 	}

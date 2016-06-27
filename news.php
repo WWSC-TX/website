@@ -5,7 +5,7 @@ if(!defined('COMMON_INCLUDED'))
 $smarty->assign('office_hours', array(
 	'label' => 'Office Hours:',
 	'text' => array('Mondays and Wednesdays',
-									'10:00am - 2:00pm')
+                    '10:00am - 2:00pm')
 ));
 $smarty->assign('office_location', array(
 	'label' => 'Office Location:',

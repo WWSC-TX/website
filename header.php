@@ -3,13 +3,13 @@ if(!defined('COMMON_INCLUDED'))
 	exit(1);
 
 $smarty->assign('menu', array(
-		'Home'					=> './',
-		'Archives'			=> 'archives.php',
-		'Forms'					=> 'forms.php',
-		'Policies'			=> 'policy.php',
-		'Rates & Fees'	=> 'rates.php',
-		'About Us'			=> 'about.php',
-		'Links'					=> 'links.php'
+		'Home'         => './',
+		'Archives'     => 'archives.php',
+		'Forms'        => 'forms.php',
+		'Policies'     => 'policy.php',
+		'Rates & Fees' => 'rates.php',
+		'About Us'     => 'about.php',
+		'Links'        => 'links.php'
 	));
 
 $smarty->assign('welcome', 'Welcome!');
