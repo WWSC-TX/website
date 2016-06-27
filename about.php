@@ -28,36 +28,28 @@ class BoardMember
 	public $name;
 	public $title;
 	public $expires;
+	
+	function BoardMember($title, $line) {
+		$this->title = $title;
+		$line = explode(' ', $line);
+		$this->expires = strtotime(array_shift($line).' '.array_shift($line));
+		$line = implode(' ', $line);
+		$this->name = $line;
+	}
 }
 
-// President
-$president = new BoardMember();
-$president->name = 'Tony Del Plato';
-$president->title = 'President';
-$president->expires = strtotime('March 2018');
+$wc_board_members = explode("\n", file_get_contents('website_config/board_members'));
 
-// Vice President
-$vicepres = new BoardMember();
-$vicepres->name = 'Kevin Thomson';
-$vicepres->title = 'Vice President';
-$vicepres->expires = strtotime('March 2019');
-
-// Treasurer/Secretary
-$secretary = new BoardMember();
-$secretary->name = 'Linne Shields';
-$secretary->title = 'Treasurer/Secretary';
-$secretary->expires = strtotime('March 2019');
+$president = new BoardMember('President', array_shift($wc_board_members));
+$vicepres = new BoardMember('Vice President', array_shift($wc_board_members));
+$secretary = new BoardMember('Treasurer/Secretary', array_shift($wc_board_members));
 
 // No title
 $untitled = array();
-$member = new BoardMember();
-$member->name = 'Larry McNeny';
-$member->expires = strtotime('March 2017');
+$member = new BoardMember(null, array_shift($wc_board_members));
 $untitled[] = $member;
 
-$member = new BoardMember();
-$member->name = 'Jason Cole';
-$member->expires = strtotime('March 2017');
+$member = new BoardMember(null, array_shift($wc_board_members));
 $untitled[] = $member;
 
 $board = array(
