@@ -28,9 +28,6 @@ class BoardMember
 	public $name;
 	public $title;
 	public $expires;
-	public $address;
-	public $email;
-	public $phone;
 }
 
 // President
@@ -38,51 +35,29 @@ $president = new BoardMember();
 $president->name = 'Tony Del Plato';
 $president->title = 'President';
 $president->expires = strtotime('March 2018');
-$president->address = array('P.O. Box 237',
-															'Weston, Texas 75097');
-$president->email = array('Tdelplato@Karlee.com');
-$president->phone = array('Home' => '972-740-8561');
 
 // Vice President
 $vicepres = new BoardMember();
 $vicepres->name = 'Kevin Thomson';
 $vicepres->title = 'Vice President';
 $vicepres->expires = strtotime('March 2019');
-$vicepres->address = array('9704 Lake Trail',
-														'Celina, Texas 75009');
-$vicepres->email = array('eldoradovet@sbcglobal.net');
-$vicepres->phone = array('Home' => '972-529-1367',
-													'Cell' => '',
-													'Work' => '');
 
 // Treasurer/Secretary
 $secretary = new BoardMember();
 $secretary->name = 'Linne Shields';
 $secretary->title = 'Treasurer/Secretary';
 $secretary->expires = strtotime('March 2019');
-$secretary->address = array('3600 Windy Hill Rd.',
-																'Celina, Texas 75009');
-$secretary->email = array('linne@ojodeagua.com');
-$secretary->phone = array('Cell' => '469-964-1571');
 
 // No title
 $untitled = array();
 $member = new BoardMember();
 $member->name = 'Larry McNeny';
 $member->expires = strtotime('March 2017');
-$member->address = array('',
-													'');
-$member->email = array('');
-$member->phone = array('' => '');
 $untitled[] = $member;
 
 $member = new BoardMember();
 $member->name = 'Jason Cole';
 $member->expires = strtotime('March 2017');
-$member->address = array('',
-													'');
-$member->email = array('');
-$member->phone = array('Cell' => '');
 $untitled[] = $member;
 
 $board = array(
@@ -91,17 +66,16 @@ $board = array(
 	$secretary
 );
 foreach($untitled as $mem)
+{
 	$board[] = $mem;
+}
 
 // Members list
 $smarty->assign('members', array(
 	'title' => 'Our Board Members',
-	'term' => '',
 	'th_name' => 'Name',
 	'th_title' => 'Title',
 	'th_expires' => 'Expires',
-	'th_address' => 'Address',
-	'th_phone' => 'Contact',
 	'board' => $board,
 ));
 

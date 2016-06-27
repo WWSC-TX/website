@@ -9,7 +9,6 @@
 		<div>{$ccn_area}</div></div>
 		<br clear="both" />
 		<h2>{$members['title']}</h2>
-		<h4>{$members['term']}</h4>
 		<p><a href="downloads/{$bylaws_link}">{$bylaws}</a></p>
 		<table style="width: 100%" class="left">
 			<tr>
@@ -26,7 +25,6 @@
 			</tr>
 			{/foreach}
 		</table>
-		<!--div id="map_canvas"></div-->
 		</div>							<!-- Right column end -->
 		<div class="col2">	<!-- Left column start -->
 		{include file="news.tpl"}
