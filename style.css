@@ -68,7 +68,7 @@ a {
 }
 a.footerlink {
 	color: white;
-	font-size: 90%;
+	font-size: 100%;
 }
 a:hover { text-decoration: underline; }
 a[href^="mailto:"]::after,
