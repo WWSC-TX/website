@@ -1,0 +1,62 @@
+* {
+	font-family: sans-serif;
+}
+
+label {
+	font-weight: bold;
+}
+
+label,
+input[type=file] {
+	cursor: pointer;
+}
+
+legend {
+	font-size: 160%;
+	font-family: monospace;
+	font-weight: bold;
+}
+
+.vspace {
+	margin-top: 5px;
+}
+
+p {
+	margin: 0 0 0.5em 0;
+}
+
+.table {
+	display: table;
+	margin-bottom: 5px;
+}
+
+.table .header {
+	display: table-header-group;
+}
+
+.table .row {
+	display: table-row;
+}
+
+.table .cell {
+	display: table-cell;
+	padding: 0 3px 3px 0;
+}
+
+.table .header .cell {
+	font-weight: bold;
+	text-align: center;
+}
+
+.table .body {
+	display: table-row-group;
+}
+
+input[type=number] {
+	width: 6em;
+}
+
+#board .body .cell:first-child {
+	text-align: right;
+	padding-right: 10px;
+}
