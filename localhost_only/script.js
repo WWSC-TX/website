@@ -1,6 +1,8 @@
 $(function() {
 	'use strict';
 	
+	$('a[rel=external]').attr('target', '_blank');
+	
 	$('#upload_agenda,#upload_minutes,#upload_other').click(function(event) {
 		event.preventDefault();
 		if ($('#upload_file :file').val().length === 0) return;

@@ -6,6 +6,8 @@
 <script type="text/javascript" src="script.js"></script>
 </head><body>
 <h1>WWSC Website Management</h1>
+<p><a href="/wiki/Office Procedures">Procedures Manual wiki</a></p>
+<p><a href="http://westonwater.com" rel="external">http://westonwater.com</a></p>
 <fieldset>
 	<legend>PDF File Uploads</legend>
 	<form id="upload_file" enctype="multipart/form-data">
@@ -223,6 +225,7 @@
 <fieldset>
 	<legend>Links</legend>
 </fieldset>
+<p><a href="/info.php">phpinfo()</a></p>
 </body>
 </html>
 <?php
