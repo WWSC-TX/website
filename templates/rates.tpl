@@ -5,7 +5,6 @@
 		<div class="col1">	<!-- Right column start -->
 		<h2>{$base['caption']}<br /><a href="downloads/{$tariff_document}">{$see_more}</a></h2>
 		<table id="rates">
-			<caption></caption>
 			<tr id="baseRow">
 				<td>{$base['label']}</td>
 				<td>{$base['cost']}</td>
@@ -19,7 +18,7 @@
 			{foreach $prices as $gal=>$amt}
 			<tr class="{if $amt@iteration is even by 1}even{else}odd{/if}">
 				<td>{$gal}</td>
-				<td class="rightcol">{$amt}</td>
+				<td class="rightcol">${$amt}</td>
 			</tr>
 			{/foreach}
 		</table>
