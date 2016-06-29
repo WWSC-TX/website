@@ -7,9 +7,10 @@ $smarty->assign('page_name_location', 'images/titles/rates.png');
 $smarty->assign('page_name_alt', 'Rates and Fees');
 
 // Rates
+$wc_rates = explode("\n", file_get_contents('website_config/rates'));
 $smarty->assign('base', array(
 	'label' => 'Base Rate:',
-	'cost' => '$20.93',
+	'cost' => '20.93',
 	'caption' => 'Household Base Rates (Up to 3/4" Meter)'
 ));
 $smarty->assign('header', array('Gallons', 'Amount (per 1,000 gal)'));

@@ -7,7 +7,7 @@
 		<table id="rates">
 			<tr id="baseRow">
 				<td>{$base['label']}</td>
-				<td>{$base['cost']}</td>
+				<td>${$base['cost']}</td>
 			</tr>
 			<tr class="spacer"></tr>
 			<tr>
