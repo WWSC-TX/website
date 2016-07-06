@@ -1,3 +1,51 @@
+<!--<?php 
+function monthSelect($name, $selected = null, $asc = true) {
+?>
+	<select name="<?php echo $name; ?>">
+<?php for ($i = $asc ? 1 : 12; $asc ? $i <= 12 : $i > 0; $i += $asc ? 1 : -1) {
+		$month = mktime(0, 0, 0, $i); ?>
+		<option value="<?php echo date('M', $month); ?>"<?php 
+			if (date('M', $month) == $selected) echo ' selected';
+		?>><?php echo date('F', $month); ?></option>
+<?php }?>
+	</select>
+<?php 
+}
+
+function daySelect($name, $selected = null, $asc = true) {
+?>
+	<select name="<?php echo $name; ?>">
+<?php for ($i = $asc ? 1 : 31; $asc ? $i <= 31 : $i > 0; $i += $asc ? 1 : -1) { ?>
+		<option value="<?php echo $i; ?>"<?php 
+			if ($i == $selected) echo ' selected';
+		?>><?php echo $i; ?></option>
+<?php } ?>
+	</select>
+<?php 
+}
+
+function getConfigFile($filename) {
+	$uri = "http://westonwater.com/website_config/$filename";
+	
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $uri);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	
+	$text = curl_exec($ch);
+	return explode("\n", $text);
+}
+
+$meeting_dates = getConfigFile('meeting_dates');
+$meeting_year = array_shift($meeting_dates);
+
+$board = getConfigFile('board_members');
+$board_members = array(
+	'President' => array_shift($board),
+	'Vice President' => array_shift($board),
+	'Secretary-Treasurer' => array_shift($board),
+	'Board Member' => $board
+);
+?>-->
 <!DOCTYPE html>
 <html><head>
 <title>WWSC Website Management</title>
@@ -31,67 +79,25 @@
 				</div>
 			</div>
 			<div class="body">
+<?php foreach ($meeting_dates as $i => $ln) {
+		$ln = explode(' ', $ln); ?>
 				<div class="row">
 					<div class="cell">
-						<select name="month[]">
-							<option value="Jan">January</option>
-							<option value="Feb">February</option>
-							<option value="Mar">March</option>
-							<option value="Apr">April</option>
-							<option value="May">May</option>
-							<option value="Jun">June</option>
-							<option value="Jul">July</option>
-							<option value="Aug">August</option>
-							<option value="Sep">September</option>
-							<option value="Oct">October</option>
-							<option value="Nov">November</option>
-							<option value="Dec">December</option>
-						</select>
+<?php monthSelect('month[]', $ln[0]); ?>
 					</div>
 					<div class="cell">
-						<select name="day[]">
-							<option value="31">31</option>
-							<option value="30">30</option>
-							<option value="29">29</option>
-							<option value="28">28</option>
-							<option value="27">27</option>
-							<option value="26">26</option>
-							<option value="25">25</option>
-							<option value="24">24</option>
-							<option value="23">23</option>
-							<option value="22">22</option>
-							<option value="21">21</option>
-							<option value="20">20</option>
-							<option value="19">19</option>
-							<option value="18">18</option>
-							<option value="17">17</option>
-							<option value="16">16</option>
-							<option value="15">15</option>
-							<option value="14">14</option>
-							<option value="13">13</option>
-							<option value="12">12</option>
-							<option value="11">11</option>
-							<option value="10">10</option>
-							<option value="9">9</option>
-							<option value="8">8</option>
-							<option value="7">7</option>
-							<option value="6">6</option>
-							<option value="5">5</option>
-							<option value="4">4</option>
-							<option value="3">3</option>
-							<option value="2">2</option>
-							<option value="1">1</option>
-						</select>
+<?php daySelect('day[]', $ln[1], false); ?>
 					</div>
 					<div class="cell">
 						<button class="remove">&times;</button>
 					</div>
 				</div>
+<?php } ?>
 			</div>
 		</div>
 		<label>
 			Year:
-			<input type="number" id="year" name="year">
+			<input type="number" id="year" name="year" value="<?php echo $meeting_year; ?>">
 		</label>
 		<button id="add_row">Add meeting</button>
 		<button id="save_meetings">Save dates</button>
@@ -109,111 +115,28 @@
 				</div>
 			</div>
 			<div class="body">
+<?php foreach ($board_members as $title => $ln) {
+		if (!is_array($ln)) {
+			$ln = array($ln);
+		}
+		
+		$lc_title = strtolower($title);
+		foreach ($ln as $m) {
+			$m = explode(' ', $m);
+			$month = array_shift($m);
+			$year = array_shift($m);
+			$name = implode(' ', $m);
+?>
 				<div class="row">
-					<div class="cell">President</div>
+					<div class="cell"><?php echo $title; ?></div>
 					<div class="cell">
-						<select name="term[president][month]">
-							<option value="Jan">January</option>
-							<option value="Feb">February</option>
-							<option value="Mar">March</option>
-							<option value="Apr">April</option>
-							<option value="May">May</option>
-							<option value="Jun">June</option>
-							<option value="Jul">July</option>
-							<option value="Aug">August</option>
-							<option value="Sep">September</option>
-							<option value="Oct">October</option>
-							<option value="Nov">November</option>
-							<option value="Dec">December</option>
-						</select>
-						<input type="number" name="term[president][year]" min="2000">
+<?php monthSelect("term[$lc_title][month]", $month); ?>
+						<input type="number" name="term[<?php echo $lc_title; ?>][year]" min="2000" value="<?php echo $year; ?>">
 					</div>
-					<div class="cell"><input type="text" name="president_name"></div>
+					<div class="cell"><input type="text" name="term[<?php echo $lc_title; ?>][name]" value="<?php echo $name; ?>"></div>
 				</div>
-				<div class="row">
-					<div class="cell">Vice President</div>
-					<div class="cell">
-						<select name="term[vice_president][month]">
-							<option value="Jan">January</option>
-							<option value="Feb">February</option>
-							<option value="Mar">March</option>
-							<option value="Apr">April</option>
-							<option value="May">May</option>
-							<option value="Jun">June</option>
-							<option value="Jul">July</option>
-							<option value="Aug">August</option>
-							<option value="Sep">September</option>
-							<option value="Oct">October</option>
-							<option value="Nov">November</option>
-							<option value="Dec">December</option>
-						</select>
-						<input type="number" name="term[vice_president][year]" min="2000">
-					</div>
-					<div class="cell"><input type="text" name="vice_president_name"></div>
-				</div>
-				<div class="row">
-					<div class="cell">Treasurer/Secretary</div>
-					<div class="cell">
-						<select name="term[treasurer/secretary][month]">
-							<option value="Jan">January</option>
-							<option value="Feb">February</option>
-							<option value="Mar">March</option>
-							<option value="Apr">April</option>
-							<option value="May">May</option>
-							<option value="Jun">June</option>
-							<option value="Jul">July</option>
-							<option value="Aug">August</option>
-							<option value="Sep">September</option>
-							<option value="Oct">October</option>
-							<option value="Nov">November</option>
-							<option value="Dec">December</option>
-						</select>
-						<input type="number" name="term[treasurer/secretary][year]" min="2000">
-					</div>
-					<div class="cell"><input type="text" name="treasurer_secretary_name"></div>
-				</div>
-				<div class="row">
-					<div class="cell">Board Member</div>
-					<div class="cell">
-						<select name="term[member4][month]">
-							<option value="Jan">January</option>
-							<option value="Feb">February</option>
-							<option value="Mar">March</option>
-							<option value="Apr">April</option>
-							<option value="May">May</option>
-							<option value="Jun">June</option>
-							<option value="Jul">July</option>
-							<option value="Aug">August</option>
-							<option value="Sep">September</option>
-							<option value="Oct">October</option>
-							<option value="Nov">November</option>
-							<option value="Dec">December</option>
-						</select>
-						<input type="number" name="term[member4][year]" min="2000">
-					</div>
-					<div class="cell"><input type="text" name="member4_name"></div>
-				</div>
-				<div class="row">
-					<div class="cell">Board Member</div>
-					<div class="cell">
-						<select name="term[member5][month]">
-							<option value="Jan">January</option>
-							<option value="Feb">February</option>
-							<option value="Mar">March</option>
-							<option value="Apr">April</option>
-							<option value="May">May</option>
-							<option value="Jun">June</option>
-							<option value="Jul">July</option>
-							<option value="Aug">August</option>
-							<option value="Sep">September</option>
-							<option value="Oct">October</option>
-							<option value="Nov">November</option>
-							<option value="Dec">December</option>
-						</select>
-						<input type="number" name="term[member5][year]" min="2000">
-					</div>
-					<div class="cell"><input type="text" name="member5_name"></div>
-				</div>
+<?php 	}
+	}?>
 			</div>
 		</div>
 		<button id="save_board">Save board members</button>
@@ -228,4 +151,3 @@
 <p><a href="/info.php">phpinfo()</a></p>
 </body>
 </html>
-<?php
