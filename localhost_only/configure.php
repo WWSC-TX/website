@@ -21,30 +21,48 @@ switch ($_GET['u']) {
 		$remote = 'website_config/meeting_dates';
 		break;
 	case 'save_board':
-		if (!isset($_POST['term'], $_POST['president_name'], $_POST['vice_president_name'],
-			$_POST['treasurer_secretary_name'], $_POST['member4_name'], $_POST['member5_name'],
-			$_POST['term']['president'], $_POST['term']['president']['month'],
-			$_POST['term']['president']['year'], $_POST['term']['vice_president'],
-			$_POST['term']['vice_president']['month'], $_POST['term']['vice_president']['year'],
-			$_POST['term']['treasurer/secretary'],
-			$_POST['term']['treasurer/secretary']['month'],
-			$_POST['term']['treasurer/secretary']['year'], $_POST['term']['member4'],
+		if (!isset($_POST['term'], $_POST['term']['president'], $_POST['term']['president']['month'],
+			$_POST['term']['president']['year'], $_POST['term']['president']['name'],
+			$_POST['term']['vice president'], $_POST['term']['vice president']['month'],
+			$_POST['term']['vice president']['year'], $_POST['term']['vice president']['name'],
+			$_POST['term']['secretary-treasurer'], $_POST['term']['secretary-treasurer']['month'],
+			$_POST['term']['secretary-treasurer']['year'],
+			$_POST['term']['secretary-treasurer']['name'], $_POST['term']['member4'],
 			$_POST['term']['member4']['month'], $_POST['term']['member4']['year'],
-			$_POST['term']['member5'], $_POST['term']['member5']['month'],
-			$_POST['term']['member5']['year'])) {
+			$_POST['term']['member4']['name'], $_POST['term']['member5'],
+			$_POST['term']['member5']['month'], $_POST['term']['member5']['year'],
+			$_POST['term']['member5']['name'])) {
 				header('HTTP/1.0 400 Bad request');
 				die('You are not allowed to access this file.');
 		}
-		$term = $_POST['term'];print_r($term);
+		$term = $_POST['term'];
 		$text = <<<BOARD
-{$term['president']['month']} {$term['president']['year']} {$_POST['president_name']}
-{$term['vice_president']['month']} {$term['vice_president']['year']} {$_POST['vice_president_name']}
-{$term['treasurer/secretary']['month']} {$term['treasurer/secretary']['year']} {$_POST['treasurer_secretary_name']}
-{$term['member4']['month']} {$term['member4']['year']} {$_POST['member4_name']}
-{$term['member5']['month']} {$term['member5']['year']} {$_POST['member5_name']}
+{$term['president']['month']} {$term['president']['year']} {$term['president']['name']}
+{$term['vice president']['month']} {$term['vice president']['year']} {$term['vice president']['name']}
+{$term['secretary-treasurer']['month']} {$term['secretary-treasurer']['year']} {$term['secretary-treasurer']['name']}
+{$term['member4']['month']} {$term['member4']['year']} {$term['member4']['name']}
+{$term['member5']['month']} {$term['member5']['year']} {$term['member5']['name']}
 BOARD;
 		fwrite($tmp, $text);
 		$remote = 'website_config/board_members';
+		break;
+	case 'save_rates':
+		if (!isset($_POST)) {
+			header('HTTP/1.0 400 Bad request');
+			die('You are not allowed to access this file.');
+		}
+		$text = '';
+		fwrite($tmp, $text);
+		$remote = 'website_config/rates';
+		break;
+	case 'save_links':
+		if (!isset($_POST)) {
+			header('HTTP/1.0 400 Bad request');
+			die('You are not allowed to access this file.');
+		}
+		$text = '';
+		fwrite($tmp, $text);
+		$remote = 'website_config/links';
 		break;
 	default:
 		header('HTTP/1.0 400 Bad request');
