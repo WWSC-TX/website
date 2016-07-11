@@ -121,19 +121,20 @@ $board_members = array(
 		}
 		
 		$lc_title = strtolower($title);
-		foreach ($ln as $m) {
+		foreach ($ln as $i => $m) {
 			$m = explode(' ', $m);
 			$month = array_shift($m);
 			$year = array_shift($m);
 			$name = implode(' ', $m);
+			$member = count($ln) > 1 ? 'member'.($i + 4) : $lc_title;
 ?>
 				<div class="row">
 					<div class="cell"><?php echo $title; ?></div>
 					<div class="cell">
-<?php monthSelect("term[$lc_title][month]", $month); ?>
-						<input type="number" name="term[<?php echo $lc_title; ?>][year]" min="2000" value="<?php echo $year; ?>">
+<?php monthSelect("term[$member][month]", $month); ?>
+						<input type="number" name="term[<?php echo $member; ?>][year]" min="2000" value="<?php echo $year; ?>">
 					</div>
-					<div class="cell"><input type="text" name="term[<?php echo $lc_title; ?>][name]" value="<?php echo $name; ?>"></div>
+					<div class="cell"><input type="text" name="term[<?php echo $member; ?>][name]" value="<?php echo $name; ?>"></div>
 				</div>
 <?php 	}
 	}?>
@@ -144,9 +145,15 @@ $board_members = array(
 </fieldset>
 <fieldset>
 	<legend>Rates</legend>
+	<form id="rates">
+		<button id="save_rates">Save rates</button>
+	</form>
 </fieldset>
 <fieldset>
 	<legend>Links</legend>
+	<form id="links">
+		<button id="save_links">Save links</button>
+	</form>
 </fieldset>
 <p><a href="/info.php">phpinfo()</a></p>
 </body>
