@@ -34,36 +34,18 @@ $(function() {
 		$(this).parents('.row').remove();
 	});
 	
-	$('#save_meetings').click(function(event) {
+	$('#save_meetings,#save_board,#save_rates,#save_links').click(function(event) {
+		var self = this;
 		event.preventDefault();
 		$.ajax({
 			type: 'POST',
 			url: 'configure.php?u=' + this.id,
-			data: new FormData($('#meeting_dates')[0]),
-			processData: false,
-			contentType: false,
-			success: function(data){
-				console.log(data);
-				alert('Meeting dates saved!');
-			},
-			error: function(xhr, status, error) {
-				console.log(xhr);
-				alert('ERROR! ' + xhr.status + ' ' + error);
-			}
-		});
-	});
-	
-	$('#save_board').click(function(event) {
-		event.preventDefault();
-		$.ajax({
-			type: 'POST',
-			url: 'configure.php?u=' + this.id,
-			data: new FormData($('#board')[0]),
+			data: new FormData($(this).parent('form')[0]),
 			processData: false,
 			contentType: false,
 			success: function(data) {
 				console.log(data);
-				alert('Board members saved!');
+				alert(self.id.substring(5, 6).toUpperCase() + self.id.substring(6) + ' saved!');
 			},
 			error: function(xhr, status, error) {
 				console.log(xhr);
