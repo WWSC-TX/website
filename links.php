@@ -8,11 +8,20 @@ $smarty->assign('page_name_alt', 'Links');
 
 $smarty->assign('introduction', 'The following links may be of interest to you, our member or prospective member.');
 
-$smarty->assign('links', array(
-	'Texas Rural Water Association' => 'http://trwa.org/',
-	'Texas Commission on Environmental Quality (Formerly Texas Natural Resource Conservation Commission)' => 'http://www.tceq.state.tx.us/',
-	'North Texas Groundwater Conservation District' => 'http://northtexasgcd.org/'
-));
+$wc_links = explode("\n", file_get_contents('website_config/links'));
+$links = array();
+$c = 0;
+while (sizeof($wc_links) > 0) {
+	$line = array_shift($wc_links);
+	if (strpos($line, '--') === 0) {
+		$c++;
+		continue;
+	}
+	if ($c < 5) continue;
+	$line = explode('|', $line);
+	$links[$line[0]] = trim($line[1]);
+}
+$smarty->assign('links', $links);
 
 // Display page
 $smarty->display('links.tpl');
