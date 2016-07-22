@@ -22,8 +22,23 @@ foreach ($wc_rates as $ln) {
 	$prices[$label] = $price;
 }
 $smarty->assign('prices', $prices);
-$smarty->assign('see_more', 'See Tariff for Additional Rates');
-$smarty->assign('tariff_document', 'tariffs_r2012-12.pdf');
+
+// Links
+$wc_links = explode("\n", file_get_contents('website_config/links'));
+$rates_links = array();
+$c = 0;
+while (true) {
+	$line = array_shift($wc_links);
+	if (strpos($line, '--') === 0) {
+		$c++;
+		continue;
+	}
+	if ($c > 3) break;
+	if ($c < 3) continue;
+	$line = explode('|', $line);
+	$rates_links[$line[0]] = trim($line[1]);
+}
+$smarty->assign('rates_links', $rates_links);
 
 // Display page
 $smarty->display('rates.tpl');

@@ -3,7 +3,10 @@
 <div class="colmask twocol">
 	<div class="colleft">
 		<div class="col1">	<!-- Right column start -->
-		<h2>{$base['caption']}<br /><a href="downloads/{$tariff_document}">{$see_more}</a></h2>
+		<h2>{$base['caption']}</h2>
+{foreach $rates_links as $title=>$file}
+		<h2><a href="downloads/{$file}">{$title}</a></h2>
+{/foreach}
 		<table id="rates">
 			<tr id="baseRow">
 				<td>{$base['label']}</td>
