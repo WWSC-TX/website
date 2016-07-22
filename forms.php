@@ -7,12 +7,22 @@ $smarty->assign('page_name_location', 'images/titles/forms.png');
 $smarty->assign('page_name_alt', 'Forms');
 
 // Forms listing
-$smarty->assign('form_links', array(
-	'Standard Application and Agreement Form' => 'standard_application_form.pdf',
-	'Membership Transfer Authorization' => 'membership_transfer_authorization.pdf',
-	'Alternative Billing Agreement for Rental Account' => 'alternative_billing_agreement.pdf',
-	'Application for Board of Directors Position' => 'application_for_board_of_directors.pdf',
-));
+$wc_links = explode("\n", file_get_contents('website_config/links'));
+$forms_links = array();
+$c = 0;
+while (true) {
+	$line = array_shift($wc_links);
+	if (strpos($line, '--') === 0) {
+		$c++;
+		continue;
+	}
+	if ($c > 1) break;
+	if ($c < 1) continue;
+	$line = explode('|', $line);
+	$form_links[$line[0]] = trim($line[1]);
+}
+
+$smarty->assign('form_links', $form_links);
 
 // Display page
 $smarty->display('forms.tpl');
