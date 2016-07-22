@@ -45,6 +45,9 @@ $board_members = array(
 	'Secretary-Treasurer' => array_shift($board),
 	'Board Member' => $board
 );
+
+$rates = getConfigFile('rates');
+$base_rate = array_shift($rates);
 ?>-->
 <!DOCTYPE html>
 <html><head>
@@ -146,6 +149,29 @@ $board_members = array(
 <fieldset>
 	<legend>Rates</legend>
 	<form id="rates">
+		<div class="table">
+			<div class="header">
+				<div class="row" style="background-color:#ccc">
+					<div class="cell" style="text-align:right;padding:3px"><label for="base_rate">Base rate:</label></div>
+					<div class="Cell" style="padding:3px"><input type="number" name="base" id="base_rate" step="0.01" value="<?php echo $base_rate; ?>"></div>
+				</div>
+				<div class="row">
+					<div class="cell">Gallons</div>
+					<div class="cell" style="padding-left:5px">Rate (per 1,000 gallons)</div>
+				</div>
+			</div>
+			<div class="body">
+<?php foreach ($rates as $i=>$r) {
+			$rateparts = explode(' ', $r);
+			$r = array_shift($rateparts);
+			$g = implode(' ', $rateparts); ?>
+				<div class="row">
+					<div class="cell"><input style="text-align:right" type="text" name="gallons_<?php echo $i; ?>" value="<?php echo $g; ?>"></div>
+					<div class="cell" style="text-align:center"><input type="number" name="rate_<?php echo $i; ?>" step="0.01" value="<?php echo $r; ?>"></div>
+				</div>
+<?php } ?>
+			</div>
+		</div>
 		<button id="save_rates">Save rates</button>
 	</form>
 </fieldset>

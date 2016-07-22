@@ -47,11 +47,26 @@ BOARD;
 		$remote = 'website_config/board_members';
 		break;
 	case 'save_rates':
-		if (!isset($_POST)) {
+		if (!isset($_POST['base'], $_POST['gallons_0'], $_POST['gallons_1'], $_POST['gallons_2'],
+			$_POST['gallons_3'], $_POST['gallons_4'], $_POST['rate_0'], $_POST['rate_1'],
+			$_POST['rate_2'], $_POST['rate_3'], $_POST['rate_4'])) {
 			header('HTTP/1.0 400 Bad request');
 			die('You are not allowed to access this file.');
 		}
-		$text = '';
+		$base = $_POST['base'];
+		foreach ($_POST as $k=>$v) {
+			if (strstr($k, 'gallons_') == 0 || strstr($k, 'rate_') == 0) {
+				$$k = $v;
+			}
+		}
+		$text = <<<RATES
+$base
+$rate_0 $gallons_0
+$rate_1 $gallons_1
+$rate_2 $gallons_2
+$rate_3 $gallons_3
+$rate_4 $gallons_4
+RATES;
 		fwrite($tmp, $text);
 		$remote = 'website_config/rates';
 		break;
