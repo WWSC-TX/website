@@ -17,6 +17,10 @@ body {
 p { margin-top: 8px; font-size: 80%; }
 p * { font-size: 100%; }
 
+em, i { font-style: italic; }
+strong, b { font-weight: bold; }
+u { text-decoration: underline; }
+
 #body { margin: 0cm 1.75cm 0cm 1.75cm; }
 
 #pageName { margin-left: 3cm; }
