@@ -87,8 +87,6 @@ while (true) {
 	$about_links[$line[0]] = trim($line[1]);
 }
 $smarty->assign('about_links', $about_links);
-$smarty->assign('bylaws', 'Bylaws');
-$smarty->assign('bylaws_link', 'bylaws_r2003-04.pdf');
 
 // Map
 $smarty->assign('ccn_small', 'service_map_cropped_reduced.jpg');
