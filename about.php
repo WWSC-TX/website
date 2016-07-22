@@ -71,6 +71,22 @@ $smarty->assign('members', array(
 	'board' => $board,
 ));
 
+// Links
+$wc_links = explode("\n", file_get_contents('website_config/links'));
+$about_links = array();
+$c = 0;
+while (true) {
+	$line = array_shift($wc_links);
+	if (strpos($line, '--') === 0) {
+		$c++;
+		continue;
+	}
+	if ($c > 4) break;
+	if ($c < 4) continue;
+	$line = explode('|', $line);
+	$about_links[$line[0]] = trim($line[1]);
+}
+$smarty->assign('about_links', $about_links);
 $smarty->assign('bylaws', 'Bylaws');
 $smarty->assign('bylaws_link', 'bylaws_r2003-04.pdf');
 
