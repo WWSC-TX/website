@@ -15,6 +15,10 @@ a:hover {
 	text-decoration: underline;
 }
 
+kbd {
+	font-family: monospace;
+}
+
 label {
 	font-weight: bold;
 }
@@ -28,6 +32,17 @@ legend {
 	font-size: 160%;
 	font-family: monospace;
 	font-weight: bold;
+}
+
+.remove {
+	background-color: #c00;
+	border-color: #c00;
+	color: white;
+}
+
+.remove:hover {
+	background-color: #f22;
+	border-color: #84c;
 }
 
 .vspace {

@@ -55,7 +55,7 @@ BOARD;
 		}
 		$base = $_POST['base'];
 		foreach ($_POST as $k=>$v) {
-			if (strstr($k, 'gallons_') == 0 || strstr($k, 'rate_') == 0) {
+			if (strpos($k, 'gallons_') == 0 || strpos($k, 'rate_') == 0) {
 				$$k = $v;
 			}
 		}

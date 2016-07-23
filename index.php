@@ -7,6 +7,7 @@ $smarty->assign('page_name_alt', 'Weston Water');
 
 // Right Column text
 $wc_meeting_dates = explode("\n", file_get_contents('website_config/meeting_dates'));
+foreach ($wc_meeting_dates as $i=>$d) $wc_meeting_dates[$i] = trim($d);
 $meeting_dates_year = intval(array_shift($wc_meeting_dates));
 $meeting_dates = array_fill_keys($wc_meeting_dates, array());
 

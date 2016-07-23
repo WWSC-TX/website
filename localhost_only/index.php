@@ -24,6 +24,19 @@ function daySelect($name, $selected = null, $asc = true) {
 <?php 
 }
 
+$pdfs = getFilesList();
+function fileSelect($name, $selected = null) {
+	global $pdfs;
+?>
+	<select name="<?php echo $name; ?>">
+<?php if ($selected == null) { ?>		<option value="" disabled selected>(Select PDF)</option><?php } ?>
+<?php foreach ($pdfs as $f) { ?>
+		<option value="<?php echo $f; ?>"<?php if ($selected == $f) echo ' selected'; ?>><?php echo $f; ?></option>
+<?php } ?>
+	</select>
+<?php
+}
+
 function getConfigFile($filename) {
 	$uri = "http://westonwater.com/website_config/$filename";
 	
@@ -33,6 +46,16 @@ function getConfigFile($filename) {
 	
 	$text = curl_exec($ch);
 	return explode("\n", $text);
+}
+
+function getFilesList() {
+	$ftp = ftp_connect('westonwater.com');
+	$login = ftp_login($ftp, 'west7808', 'Water_b0ard');
+	$result = ftp_nlist($ftp, 'downloads');
+	array_splice($result, 0, 3);
+	$readme_idx = array_search('readme.txt', $result);
+	array_splice($result, $readme_idx, 1);
+	return $result;
 }
 
 $meeting_dates = getConfigFile('meeting_dates');
@@ -48,6 +71,32 @@ $board_members = array(
 
 $rates = getConfigFile('rates');
 $base_rate = array_shift($rates);
+
+$links_config = getConfigFile('links');
+$links = array('index' => array());
+$ks = array('index', 'forms', 'policies', 'rates', 'about', 'links');
+$c = 0;
+foreach ($links_config as $line) {
+	if (trim($line) == '--') {
+		$c++;
+		$links[$ks[$c]] = array();
+		continue;
+	}
+	$line = explode('|', $line);
+	if (count($line) === 1) {
+		$links[$ks[$c]]['_'] = $line[0];
+	} else {
+		$links[$ks[$c]][$line[0]] = $line[1];
+	}
+}
+
+$index_links = array('news' => '', 'files' => array(), 'links' => array());
+foreach ($links['index'] as $k => $v) {
+	if ($k == '_') $index_links['news'] = $v;
+	else if (strpos($v, 'http') === 0) $index_links['links'][$k] = $v;
+	else $index_links['files'][$k] = $v;
+}
+$links['index'] = $index_links;
 ?>-->
 <!DOCTYPE html>
 <html><head>
@@ -177,8 +226,162 @@ $base_rate = array_shift($rates);
 </fieldset>
 <fieldset>
 	<legend>Links</legend>
+	Note: If you upload a file (see PDF File Uploads at the top of this page), you must refresh the page
+	(press <kbd>[f5]</kbd>) in order to have that file available in the file select dropdowns below.
 	<form id="links">
-		<button id="save_links">Save links</button>
+		<fieldset>
+			<legend>Front page</legend>
+			<label for="news" style="display:block">News</label>
+			<textarea name="news"><?php echo $links['index']['news']; ?></textarea>
+			<fieldset>
+				<legend>Files</legend>
+				<div class="table">
+					<div class="header">
+						<div class="row">
+							<div class="cell">Text</div>
+							<div class="cell">File</div>
+						</div>
+					</div>
+					<div class="body" id="index-files">
+<?php foreach ($links['index']['files'] as $name => $file) { ?>
+						<div class="row">
+							<div class="cell"><input type="text" name="index[file][text][]" value="<?php echo $name; ?>"></div>
+							<div class="cell"><?php fileSelect('index[file][file][]', $file); ?></div>
+							<div class="cell"><button class="remove">&times;</button></div>
+						</div>
+<?php } ?>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>External links</legend>
+				<div class="table">
+					<div class="header">
+						<div class="row">
+							<div class="cell">Text</div>
+							<div class="cell">Link</div>
+						</div>
+					</div>
+					<div class="body" id="index-links">
+<?php foreach ($links['index']['links'] as $name => $url) { ?>
+						<div class="row">
+							<div class="cell"><input type="text" name="index[link][text][]" value="<?php echo $name; ?>"></div>
+							<div class="cell"><input type="text" name="index[link][link][]" value="<?php echo $url; ?>"></div>
+							<div class="cell"><button class="remove">&times;</button></div>
+						</div>
+<?php } ?>
+					</div>
+				</div>
+			</fieldset>
+			<button class="add_file" data-for="index-files">Add file</button>
+			<button class="add_link" data-for="index-links">Add link</button>
+		</fieldset>
+		<fieldset>
+			<legend>Forms</legend>
+			<div class="table">
+				<div class="header">
+					<div class="row">
+						<div class="cell">Text</div>
+						<div class="cell">File</div>
+					</div>
+				</div>
+				<div class="body" id="forms-files">
+<?php foreach ($links['forms'] as $name => $file) { ?>
+					<div class="row">
+						<div class="cell"><input type="text" name="forms[text][]" value="<?php echo $name; ?>"></div>
+						<div class="cell"><?php fileSelect('forms[file][]', $file); ?></div>
+						<div class="cell"><button class="remove">&times;</button></div>
+					</div>
+<?php } ?>
+				</div>
+			</div>
+			<button class="add_file" data-for="forms-files">Add file</button>
+		</fieldset>
+		<fieldset>
+			<legend>Policies</legend>
+			<div class="table">
+				<div class="header">
+					<div class="row">
+						<div class="cell">Text</div>
+						<div class="cell">File</div>
+					</div>
+				</div>
+				<div class="body" id="policies-files">
+<?php foreach ($links['policies'] as $name => $file) { ?>
+					<div class="row">
+						<div class="cell"><input type="text" name="policies[text][]" value="<?php echo $name; ?>"></div>
+						<div class="cell"><?php fileSelect('policies[file][]', $file); ?></div>
+						<div class="cell"><button class="remove">&times;</button></div>
+					</div>
+<?php } ?>
+				</div>
+			</div>
+			<button class="add_file" data-for="policies-files">Add file</button>
+		</fieldset>
+		<fieldset>
+			<legend>Rates</legend>
+			<div class="table">
+				<div class="header">
+					<div class="row">
+						<div class="cell">Text</div>
+						<div class="cell">File</div>
+					</div>
+				</div>
+				<div class="body" id="rates-files">
+<?php foreach ($links['rates'] as $name => $file) { ?>
+					<div class="row">
+						<div class="cell"><input type="text" name="rates[text][]" value="<?php echo $name; ?>"></div>
+						<div class="cell"><?php fileSelect('rates[file][]', $file); ?></div>
+						<div class="cell"><button class="remove">&times;</button></div>
+					</div>
+<?php } ?>
+				</div>
+			</div>
+			<button class="add_file" data-for="rates-files">Add file</button>
+		</fieldset>
+		<fieldset>
+			<legend>About us</legend>
+			<div class="table">
+				<div class="header">
+					<div class="row">
+						<div class="cell">Text</div>
+						<div class="cell">File</div>
+					</div>
+				</div>
+				<div class="body" id="about-files">
+<?php foreach ($links['about'] as $name => $file) { ?>
+					<div class="row">
+						<div class="cell"><input type="text" name="about[text][]" value="<?php echo $name; ?>"></div>
+						<div class="cell"><?php fileSelect('about[file][]', $file); ?></div>
+						<div class="cell"><button class="remove">&times;</button></div>
+					</div>
+<?php } ?>
+				</div>
+			</div>
+			<button class="add_file" data-for="about-files">Add file</button>
+		</fieldset>
+		<fieldset>
+			<legend>Links</legend>
+			<div class="table">
+				<div class="header">
+					<div class="row">
+						<div class="cell">Text</div>
+						<div class="cell">Link</div>
+					</div>
+				</div>
+				<div class="body" id="links-links">
+<?php foreach ($links['links'] as $name => $url) { ?>
+					<div class="row">
+						<div class="cell"><input type="text" name="links[text][]" value="<?php echo $name; ?>"></div>
+						<div class="cell"><input type="text" name="links[link][]" value="<?php echo $url; ?>"></div>
+						<div class="cell"><button class="remove">&times;</button></div>
+					</div>
+<?php } ?>
+				</div>
+			</div>
+			<button class="add_link" data-for="links-links">Add link</button>
+		</fieldset>
+		<button id="save_links"><strong>Save links</strong></button>
 	</form>
 </fieldset>
 <p><a href="/info.php">phpinfo()</a></p>
