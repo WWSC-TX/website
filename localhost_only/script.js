@@ -26,8 +26,18 @@ $(function() {
 	
 	$('#add_row').click(function(event) {
 		event.preventDefault();
-		let row = $('#meeting_dates .table .body .row:last-child').clone(true);
-		$('#meeting_dates .table .body').append(row);
+		let $row = $('#meeting_dates .table .body .row:last-child').clone(true);
+		$('#meeting_dates .table .body').append($row);
+	});
+	$('.add_file,.add_link').click(function(event) {
+		event.preventDefault();
+		let id = $(this).data('for'),
+			$tbody = $('#' + id),
+			$row = $($tbody.children()[0]).clone(true);
+		$row.find('input').val('');
+		$row.find('select').prepend($('<option value="" disabled>(Select PDF)</option>'))
+				.find('option:first-child').prop('selected', true);
+		$tbody.append($row);
 	});
 	$('.remove').click(function(event) {
 		event.preventDefault();
