@@ -71,11 +71,27 @@ RATES;
 		$remote = 'website_config/rates';
 		break;
 	case 'save_links':
-		if (!isset($_POST)) {
+		if (!isset($_POST['news'], $_POST['index'], $_POST['index']['file'],
+			$_POST['index']['file']['text'], $_POST['index']['file']['file'], $_POST['index']['link'],
+			$_POST['index']['link']['text'], $_POST['index']['link']['link'],
+			$_POST['forms'], $_POST['forms']['text'], $_POST['forms']['file'],
+			$_POST['policies'], $_POST['policies']['text'], $_POST['policies']['file'],
+			$_POST['rates'], $_POST['rates']['text'], $_POST['rates']['file'],
+			$_POST['about'], $_POST['about']['text'], $_POST['about']['file'],
+			$_POST['links'], $_POST['links']['text'], $_POST['links']['link'])) {
 			header('HTTP/1.0 400 Bad request');
 			die('You are not allowed to access this file.');
 		}
-		$text = '';
+		$text = $_POST['news']."\n";
+		$groups = array($_POST['index']['file'], $_POST['index']['link'], $_POST['forms'],
+			$_POST['policies'], $_POST['rates'], $_POST['about'], $_POST['links']);
+		foreach ($groups as $k => $g) {
+			$col2 = isset($g['file']) ? $g['file'] : $g['link'];
+			foreach ($g['text'] as $i => $t) {
+				$text .= $t.'|'.$col2[$i]."\n";
+			}
+			if ($k !== 0 && $k !== 6) $text .= "--\n";
+		}
 		fwrite($tmp, $text);
 		$remote = 'website_config/links';
 		break;
@@ -87,7 +103,7 @@ RATES;
 $conn = ftp_connect('westonwater.com');
 $login = ftp_login($conn, 'west7808', 'Water_b0ard');
 $file = stream_get_meta_data($tmp)['uri'];
-print_r($path);
+
 if (ftp_put($conn, $remote, $file, FTP_ASCII)) {
 	echo 'success!';
 } else {
