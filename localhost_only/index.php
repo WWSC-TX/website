@@ -384,6 +384,10 @@ $links['index'] = $index_links;
 		<button id="save_links"><strong>Save links</strong></button>
 	</form>
 </fieldset>
+<fieldset>
+	<legend>Left Sidebar</legend>
+	<button id="save_sidebar"><strong>Save sidebar</strong></button>
+</fieldset>
 <p><a href="/info.php">phpinfo()</a></p>
 </body>
 </html>

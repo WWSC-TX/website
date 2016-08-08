@@ -95,6 +95,15 @@ RATES;
 		fwrite($tmp, $text);
 		$remote = 'website_config/links';
 		break;
+	case 'save_sidebar':
+		if (!isset($_POST)) {
+			header('HTTP/1.0 400 Bad request');
+			die('You are not allowed to access this file.');
+		}
+		$text = '';
+		fwrite($tmp, $text);
+		$remote = 'website_config/sidebar';
+		break;
 	default:
 		header('HTTP/1.0 400 Bad request');
 		die('You are not allowed to access this file.');

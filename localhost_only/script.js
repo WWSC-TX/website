@@ -44,7 +44,7 @@ $(function() {
 		$(this).parents('.row').remove();
 	});
 	
-	$('#save_meetings,#save_board,#save_rates,#save_links').click(function(event) {
+	$('#save_meetings,#save_board,#save_rates,#save_links,#save_sidebar').click(function(event) {
 		var self = this;
 		event.preventDefault();
 		$.ajax({
