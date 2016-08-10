@@ -39,9 +39,20 @@ $(function() {
 				.find('option:first-child').prop('selected', true);
 		$tbody.append($row);
 	});
-	$('.remove').click(function(event) {
+	$('.row .remove').click(function(event) {
 		event.preventDefault();
 		$(this).parents('.row').remove();
+	});
+	$('#sidebar .remove').click(function(event) {
+		event.preventDefault();
+		$($(this).parents('fieldset')[0]).remove();
+	});
+	
+	$('#add-sidebar-group').click(function(event) {
+		event.preventDefault();
+		let $group = $(this).prev().clone(true);
+		$group.find('input').val('').end().find('textarea').val('');
+		$(this).before($group);
 	});
 	
 	$('#save_meetings,#save_board,#save_rates,#save_links,#save_sidebar').click(function(event) {
@@ -50,7 +61,7 @@ $(function() {
 		$.ajax({
 			type: 'POST',
 			url: 'configure.php?u=' + this.id,
-			data: new FormData($(this).parent('form')[0]),
+			data: new FormData($(this).parents('form')[0]),
 			processData: false,
 			contentType: false,
 			success: function(data) {
@@ -63,4 +74,6 @@ $(function() {
 			}
 		});
 	});
+	
+	autosize($('textarea'));
 });
