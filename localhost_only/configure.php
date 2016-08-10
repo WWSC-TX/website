@@ -92,7 +92,7 @@ RATES;
 			}
 			if ($k !== 0 && $k !== 6) $text .= "--\n";
 		}
-		fwrite($tmp, $text);
+		fwrite($tmp, trim($text));
 		$remote = 'website_config/links';
 		break;
 	case 'save_sidebar':
