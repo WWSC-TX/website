@@ -97,12 +97,25 @@ foreach ($links['index'] as $k => $v) {
 	else $index_links['files'][$k] = $v;
 }
 $links['index'] = $index_links;
+
+$sidebar_config = getConfigFile('sidebar');
+$sidebar = array();
+$last = '';
+foreach ($sidebar_config as $ln) {
+	if ($ln[0] !== ' ') {
+		$sidebar[$ln] = array();
+		$last = $ln;
+	} else {
+		$sidebar[$last][] = trim($ln);
+	}
+}
 ?>-->
 <!DOCTYPE html>
 <html><head>
 <title>WWSC Website Management</title>
 <link rel="stylesheet" type="text/css" href="style.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script type="text/javascript" src="autosize.js"></script>
 <script type="text/javascript" src="script.js"></script>
 </head><body>
 <h1>WWSC Website Management</h1>
@@ -386,7 +399,22 @@ $links['index'] = $index_links;
 </fieldset>
 <fieldset>
 	<legend>Left Sidebar</legend>
-	<button id="save_sidebar"><strong>Save sidebar</strong></button>
+	Up to one line in each group may be an email address prefixed with "email:". This email address will
+	be listed below all other lines in the group on the website sidebar, and will be linked with a
+	mailto: link. If you include an email without the "email:" prefix, or the email is not the only thing
+	on the line, it will be treated as normal text.
+	<form id="sidebar">
+<?php foreach ($sidebar as $group => $data) { ?>
+		<fieldset>
+			<legend><input type="text" name="group[]" value="<?php echo $group; ?>"><button class="remove">&times;</button></legend>
+			<textarea name="data[]"><?php echo implode($data, "\n"); ?></textarea>
+		</fieldset>
+<?php } ?>
+		<button id="add-sidebar-group">Add group</button>
+		<div class="vspace">
+			<button id="save_sidebar"><strong>Save sidebar</strong></button>
+		</div>
+	</form>
 </fieldset>
 <p><a href="/info.php">phpinfo()</a></p>
 </body>
