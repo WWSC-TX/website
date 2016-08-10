@@ -96,12 +96,19 @@ RATES;
 		$remote = 'website_config/links';
 		break;
 	case 'save_sidebar':
-		if (!isset($_POST)) {
+		if (!isset($_POST['group'], $_POST['data'])) {
 			header('HTTP/1.0 400 Bad request');
 			die('You are not allowed to access this file.');
 		}
 		$text = '';
-		fwrite($tmp, $text);
+		foreach ($_POST['group'] as $i => $g) {
+			$data = explode("\n", $_POST['data'][$i]);
+			$text .= "\n".$g;
+			foreach ($data as $d) {
+				$text .= "\n ".trim($d);
+			}
+		}
+		fwrite($tmp, trim($text));
 		$remote = 'website_config/sidebar';
 		break;
 	default:
