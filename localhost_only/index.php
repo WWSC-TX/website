@@ -29,9 +29,9 @@ function fileSelect($name, $selected = null) {
 	global $pdfs;
 ?>
 	<select name="<?php echo $name; ?>">
-<?php if ($selected == null) { ?>		<option value="" disabled selected>(Select PDF)</option><?php } ?>
+<?php if ($selected === null) { ?>		<option value="" disabled selected>(Select PDF)</option><?php } ?>
 <?php foreach ($pdfs as $f) { ?>
-		<option value="<?php echo $f; ?>"<?php if ($selected == $f) echo ' selected'; ?>><?php echo $f; ?></option>
+		<option value="<?php echo $f; ?>"<?php if ($selected === $f) echo ' selected'; ?>><?php echo $f; ?></option>
 <?php } ?>
 	</select>
 <?php
@@ -84,9 +84,9 @@ foreach ($links_config as $line) {
 	}
 	$line = explode('|', $line);
 	if (count($line) === 1) {
-		$links[$ks[$c]]['_'] = $line[0];
+		$links[$ks[$c]]['_'] = trim($line[0]);
 	} else {
-		$links[$ks[$c]][$line[0]] = $line[1];
+		$links[$ks[$c]][$line[0]] = trim($line[1]);
 	}
 }
 
